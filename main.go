@@ -1,12 +1,10 @@
 package main
 
 import (
+	"github.com/go-chi/chi"
 	"github.com/vfunin/elastic/handler"
 	"github.com/vfunin/elastic/l"
 	"github.com/vfunin/elastic/store"
-
-	"github.com/go-martini/martini"
-	"github.com/martini-contrib/render"
 )
 
 // Переписать не на Martini
@@ -19,16 +17,15 @@ func main() {
 	//Initialize Handlers
 	articleHandler := handler.NewArticleHandler(articleStore)
 	//Initialize Router
-	m := martini.Classic()
-	m.Use(render.Renderer())
-	//Routes
-	m.Get("/article/id/:id", articleHandler.Id)
-	m.Post("/article/add", articleHandler.Add)
-	m.Post("/article/search", articleHandler.Search)
-	panicHandler := handler.PanicHandler{}
-	m.Get("/panic", panicHandler.Handle)
-	m.Post("/log/add", panicHandler.Log)
-	m.Run()
+
+	r := chi.NewRouter()
+	//
+	//r.Get("/article/id/:id", articleHandler.Id)
+	//r.Post("/article/add", articleHandler.Add)
+	//r.Post("/article/search", articleHandler.Search)
+	//	panicHandler := handler.PanicHandler{}
+	//r.Get("/panic", panicHandler.Handle)
+	//r.Post("/log/add", panicHandler.Log)
 }
 
 func parseErr(err error) {
